@@ -11,7 +11,7 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
-
+import {FirebaseModule, FirebaseProvider} from 'angular-firebase'
 
 @NgModule({
   declarations: [
@@ -21,6 +21,7 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
     MessagesComponent,
     DashboardComponent,
     HeroSearchComponent,
+    FirebaseModule
   ],
   imports: [
     BrowserModule,
@@ -33,7 +34,8 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ),
+    FirebaseProvider
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Hero } from '../hero';
+import { User } from '../user';
 import { HeroService } from '../hero.service';
+declare var firebase: any;
+declare var firebaseSimpleLogin: any;
+
 
 @Component({
   selector: 'app-heroes',
@@ -35,4 +39,23 @@ export class HeroesComponent implements OnInit {
     this.heroes = this.heroes.filter(h => h !== hero);
     this.heroService.deleteHero(hero).subscribe();
   }
+
+  signIn = function(user: User) {
+    var firebaseObj = new firebase("https://angular-tour-of-heroes-da0f2.firebaseio.com");
+    var loginObj = firebaseSimpleLogin(firebaseObj);
+
+    loginObj.$login('password', {
+      email: user.username,
+      password: user.password
+    })
+    .then(function(user) {
+        // Success callback
+        console.log('Authentication successful');
+    }, function(error) {
+        // Failure callback
+        console.log('Authentication failure');
+    });
+     
+    // Auth Logic will be here
+  } 
 }
