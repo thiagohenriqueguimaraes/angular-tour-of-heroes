@@ -11,7 +11,7 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
-import {FirebaseModule, FirebaseProvider} from 'angular-firebase'
+// import {FirebaseModule, FirebaseProvider} from 'angular-firebase'
 
 @NgModule({
   declarations: [
@@ -21,7 +21,7 @@ import {FirebaseModule, FirebaseProvider} from 'angular-firebase'
     MessagesComponent,
     DashboardComponent,
     HeroSearchComponent,
-    FirebaseModule
+    // FirebaseModule
   ],
   imports: [
     BrowserModule,
@@ -35,7 +35,7 @@ import {FirebaseModule, FirebaseProvider} from 'angular-firebase'
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     ),
-    FirebaseProvider
+    // FirebaseProvider
   ],
   providers: [],
   bootstrap: [AppComponent]
