@@ -7,6 +7,10 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Hero } from './hero';
 import { MessageService } from './message.service';
 
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+
+/** The number of widgets present */
+declare var firebase: any;
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -21,12 +25,29 @@ export class HeroService {
     private messageService: MessageService) { }
   
     /** GET heroes from the server */
-  getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesUrl)
-    .pipe(
-      tap(_ => this.log('fetched heroes')),
-      catchError(this.handleError('getHeroes', []))
-    );
+  getHeroes(): FirebaseListObservable<Hero[]> {
+    const db = firebase.firestore();
+    const settings = {/* your settings... */ timestampsInSnapshots: true};
+    db.settings(settings);
+
+    db.list('/heroes');
+    // return db.collection("heroes").pipe(
+    //   tap(_ => this.log(`fetched hero id=`)),
+    //   catchError(this.handleError<Hero>(`getHero id=`))
+    // );
+    
+    // .get().then(function(querySnapshot) {
+
+    //     querySnapshot.forEach(function(doc) {
+    //         console.log(doc.id, " => ", doc.data());
+    //     });
+    // });
+    // return firebase.firestore().collection("heroes").get();
+    // return this.http.get<Hero[]>(this.heroesUrl)
+    // .pipe(
+    //   tap(_ => this.log('fetched heroes')),
+    //   catchError(this.handleError('getHeroes', []))
+    // );
   }
   /** GET hero by id. Will 404 if id not found */
   getHero(id: number): Observable<Hero> {
@@ -99,7 +120,4 @@ export class HeroService {
       catchError(this.handleError<Hero[]>('searchHeroes', []))
     );
   }
-
-
-
 }

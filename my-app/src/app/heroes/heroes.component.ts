@@ -4,7 +4,6 @@ import { Hero } from '../hero';
 import { User } from '../user';
 import { HeroService } from '../hero.service';
 declare var firebase: any;
-declare var firebaseSimpleLogin: any;
 
 
 @Component({
@@ -19,11 +18,19 @@ export class HeroesComponent implements OnInit {
 
   ngOnInit() {
     this.getHeroes();
+
+    try {
+      let app = firebase.app();
+      let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+      console.log(`Firebase SDK loaded with ${features.join(', ')}`);
+    } catch (e) {
+      console.error(e);
+      console.log('Error loading the Firebase SDK, check the console.');
+    }
   }
 
   getHeroes(): void {
-    this.heroService.getHeroes()
-    .subscribe(heroes => this.heroes = heroes);
+    this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
   }
 
   add(name: string): void {
@@ -39,23 +46,4 @@ export class HeroesComponent implements OnInit {
     this.heroes = this.heroes.filter(h => h !== hero);
     this.heroService.deleteHero(hero).subscribe();
   }
-
-  signIn = function(user: User) {
-    var firebaseObj = new firebase("https://angular-tour-of-heroes-da0f2.firebaseio.com");
-    var loginObj = firebaseSimpleLogin(firebaseObj);
-
-    loginObj.$login('password', {
-      email: user.username,
-      password: user.password
-    })
-    .then(function(user) {
-        // Success callback
-        console.log('Authentication successful');
-    }, function(error) {
-        // Failure callback
-        console.log('Authentication failure');
-    });
-     
-    // Auth Logic will be here
-  } 
 }
