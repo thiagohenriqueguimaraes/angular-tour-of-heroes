@@ -11,8 +11,10 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireDatabaseModule } from "angularfire2/database";
 
 @NgModule({
   declarations: [
@@ -35,8 +37,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
     ),
-    AngularFireModule.initializeApp(environment.firebase, 'fcc-book-trading'),
-    AngularFireDatabaseModule
+    AngularFireModule.initializeApp(environment.firebase, 'x'),
+    AngularFirestore, AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,8 +7,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Hero } from './hero';
 import { MessageService } from './message.service';
 
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-
+import { AngularFireObject } from 'angularfire2/database';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 /** The number of widgets present */
 declare var firebase: any;
 const httpOptions = {
@@ -19,35 +19,19 @@ const httpOptions = {
 export class HeroService {
   
   private heroesUrl = 'api/heroes'; // Url to web api
-
+  private itemsCollection: AngularFirestoreCollection<Hero>;
+  items: Observable<Hero[]>;
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private afs: AngularFirestore) { 
+      this.itemsCollection = afs.collection<Hero>('heroes');
+    }
+
   
     /** GET heroes from the server */
-  getHeroes(): FirebaseListObservable<Hero[]> {
-    const db = firebase.firestore();
-    const settings = {/* your settings... */ timestampsInSnapshots: true};
-    db.settings(settings);
-
-    db.list('/heroes');
-    // return db.collection("heroes").pipe(
-    //   tap(_ => this.log(`fetched hero id=`)),
-    //   catchError(this.handleError<Hero>(`getHero id=`))
-    // );
-    
-    // .get().then(function(querySnapshot) {
-
-    //     querySnapshot.forEach(function(doc) {
-    //         console.log(doc.id, " => ", doc.data());
-    //     });
-    // });
-    // return firebase.firestore().collection("heroes").get();
-    // return this.http.get<Hero[]>(this.heroesUrl)
-    // .pipe(
-    //   tap(_ => this.log('fetched heroes')),
-    //   catchError(this.handleError('getHeroes', []))
-    // );
+  getHeroes(): Observable<Hero[]> {
+    return this.itemsCollection.valueChanges();
   }
   /** GET hero by id. Will 404 if id not found */
   getHero(id: number): Observable<Hero> {
