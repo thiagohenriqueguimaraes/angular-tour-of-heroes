@@ -3,51 +3,12 @@
 <head>
   <meta charset="utf-8">
   <title>Angular Tour of Heroes</title>
-  <!-- Firebase App is always required and must be first -->
-<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-app.js"></script>
-
-<!-- Add additional services that you want to use -->
-<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-database.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-messaging.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.5.2/firebase-functions.js"></script>
-  <script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyDLZri1_5lvjJsABTHx8f3YEY1V1Q7HKH8",
-      authDomain: "angular-tour-of-heroes-da0f2.firebaseapp.com",
-      databaseURL: "https://angular-tour-of-heroes-da0f2.firebaseio.com",
-      projectId: "angular-tour-of-heroes-da0f2",
-      storageBucket: "angular-tour-of-heroes-da0f2.appspot.com",
-      messagingSenderId: "58002037182"
-    };
-    // Initialize the default app
-    var defaultApp = firebase.initializeApp(config);
-    console.log(defaultApp.name);  // "[DEFAULT]"
-    // You can retrieve services via the defaultApp variable...
-    var defaultStorage = defaultApp.database();
-    // ... or you can use the equivalent shorthand notation
-    defaultStorage = firebase.database();
-
-    function googleLogin() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      
-      firebase.auth().signInWithPopup(provider)
-        .then(result => {
-            const user = result.user;        
-      })  
-    }
-  </script>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-    <button onclick="googleLogin()">
-        Login with Google
-      </button>
   <app-root></app-root>
 </body>
 </html>

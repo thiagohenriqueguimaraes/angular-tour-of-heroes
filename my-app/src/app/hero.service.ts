@@ -7,7 +7,6 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Hero } from './hero';
 import { MessageService } from './message.service';
 
-import { AngularFireObject } from 'angularfire2/database';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 /** The number of widgets present */
 declare var firebase: any;
