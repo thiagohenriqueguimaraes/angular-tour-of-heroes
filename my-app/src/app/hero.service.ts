@@ -16,24 +16,30 @@ const httpOptions = {
 
 @Injectable({ providedIn: 'root' })
 export class HeroService {
-  
+
   private heroesUrl = 'api/heroes'; // Url to web api
   private itemsCollection: AngularFirestoreCollection<Hero>;
   items: Observable<Hero[]>;
+  private afs2: AngularFirestore;
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
-    private afs: AngularFirestore) { 
-      this.itemsCollection = afs.collection<Hero>('heroes');
+    private afs: AngularFirestore) {
+      this.afs2 = afs;
     }
-
-  
-    /** GET heroes from the server */
+  /** GET heroes from the server */
   getHeroes(): Observable<Hero[]> {
-    return this.itemsCollection.valueChanges();
+    this.log(`fetched heroes`);
+    return this.afs2.collection<Hero>('heroes').valueChanges();
   }
   /** GET hero by id. Will 404 if id not found */
-  getHero(id: number): Observable<Hero> {
+  getHero(id: number): Observable<any[]> {
+    this.log(`fetched hero id=${id}`);
+    return this.afs2.collection<any[]>('heroes', ref => ref.where('id', '==', id).limit(1)).valueChanges();
+  }
+
+  /** GET hero by id. Will 404 if id not found */
+  getHeroOld(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.get<Hero>(url).pipe(
       tap(_ => this.log(`fetched hero id=${id}`)),
