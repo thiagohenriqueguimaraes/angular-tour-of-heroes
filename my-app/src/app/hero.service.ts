@@ -5,12 +5,10 @@ import { Observable, of} from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Hero } from './hero';
-import { Identificador } from './identificadores';
-
+import { Identificadores } from './identificadores'
 import { MessageService } from './message.service';
 
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { first } from 'rxjs/operators';
 
 /** The number of widgets present */
 declare var firebase: any;
@@ -35,30 +33,43 @@ export class HeroService {
   /** GET heroes from the server */
   getHeroes(): Observable<Hero[]> {
     this.log(`fetched heroes`);
-    return this.afs.collection<Hero>('heroes')
-    .valueChanges();
+    return this.afs
+      .collection<Hero>('heroes')
+      .valueChanges();
   }
   /** GET hero by id. Will 404 if id not found */
   getHero(id: number): Observable<Hero> {
     return this.afs
-    .collection('heroes', ref => ref.where('id', '==', id).limit(1))
-    .valueChanges().pipe(
-      tap(_ => this.log(`fetched hero id=${id}`)),
-      catchError(this.handleError<any>('updateHero'))
-    );
+      .collection('heroes', ref => ref.where('id', '==', id).limit(1))
+      .valueChanges()
+      .pipe(
+        tap(_ => this.log(`fetched hero id=${id}`)),
+        catchError(this.handleError<any>('updateHero'))
+      );
+  }
+
+  identificadorHeroe(): Observable<Identificadores>{
+    return this.afs
+      .collection('identificadores')
+      .doc('XfXPyHpo1Q1geT1dR8xo')
+      .valueChanges()
+      .pipe(
+        tap(_ => this.log(`fetched hero id=${_}`)),
+        catchError(this.handleError<any>('updateHero'))
+      );
   }
 
   /** POST: add a new hero to the server */
-  addHero (hero: Hero): Observable<Hero> {
- 
-    this.afs
-    .collection('identificadores\XfXPyHpo1Q1geT1dR8xo',as ref => ref.limit(1))
-    .valueChanges().subscribe(i:Identificador => {
-      var x = i.;
-      hero.id =  .heroe;
-      this.log(`added hero w/ id=${hero.id}`);
+  addHero(hero: Hero): Observable<Hero> {
+    var xpto: number = 0;
+      this.identificadorHeroe()
+      .subscribe(
+        id2 => xpto = id2.heroe,
+        error => this.handleError<any>(error)
+      );
+
+      this.log(`added hero w/ id=${xpto}`);
       this.itemsCollection.doc(this.afs.createId()).set(hero);
-    });
 
     return this.getHero(hero.id);
   }
