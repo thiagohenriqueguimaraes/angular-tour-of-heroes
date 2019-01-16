@@ -5,7 +5,7 @@ import { Observable, of} from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Hero } from './hero';
-import { Identificadores } from './identificadores'
+import { Identificadores } from './identificadores';
 import { MessageService } from './message.service';
 
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
@@ -48,9 +48,9 @@ export class HeroService {
       );
   }
 
-  identificadorHeroe(): Observable<Identificadores>{
+  identificadorHeroe(): Observable<Identificadores> {
     return this.afs
-      .collection('identificadores')
+      .collection<Identificadores>('identificadores')
       .doc('XfXPyHpo1Q1geT1dR8xo')
       .valueChanges()
       .pipe(
@@ -61,15 +61,15 @@ export class HeroService {
 
   /** POST: add a new hero to the server */
   addHero(hero: Hero): Observable<Hero> {
-    var xpto: number = 0;
-      this.identificadorHeroe()
-      .subscribe(
-        id2 => xpto = id2.heroe,
-        error => this.handleError<any>(error)
-      );
+    let xpto = 0;
+    this.identificadorHeroe()
+    .subscribe(
+      id2 => xpto = id2.heroe,
+      error => this.handleError<any>(error)
+    );
 
-      this.log(`added hero w/ id=${xpto}`);
-      this.itemsCollection.doc(this.afs.createId()).set(hero);
+    this.log(`added hero w/ id=${xpto}`);
+    this.itemsCollection.doc(this.afs.createId()).set(hero);
 
     return this.getHero(hero.id);
   }
@@ -80,16 +80,12 @@ export class HeroService {
       catchError(this.handleError<any>('updateHero'))
     );
   }
-  
-  /** DELETE: delete the hero from the server */
-  deleteHero (hero: Hero | number): Observable<Hero> {
-    const id = typeof hero === 'number' ? hero : hero.id;
-    const url = `${this.heroesUrl}/${id}`;
 
-    return this.http.delete<Hero>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted hero id=${id}`)),
-      catchError(this.handleError<Hero>('deleteHero'))
-    );
+  /** DELETE: delete the hero from the server */
+  deleteHero (hero: Hero | string): void {
+    const id = typeof hero === 'string' ? hero : hero.guid;
+
+    this.afs.collection('heroes').doc(id).delete();
   }
 
   /* GET heroes whose name contains search term */
