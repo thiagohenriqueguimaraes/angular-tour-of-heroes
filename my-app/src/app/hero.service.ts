@@ -68,11 +68,27 @@ export class HeroService {
     return this.getHero(hero.id);
   }
 
-  addX(hero: Hero){
-    var heroIdRef = this.afs
-    .doc<Identificadores>('identificadores/'+'XfXPyHpo1Q1geT1dR8xo');
-    var heroRef = this.itemsCollection.doc('heroes');
-    return this.afs.
+  addX(hero: Hero) {
+    const iDocRef = this.afs.firestore
+    .collection("identificadores")
+    .doc('XfXPyHpo1Q1geT1dR8xo');
+    const heroDocRef = this.afs.firestore
+    .collection('heroes');
+    
+    hero.uid = this.afs.createId();
+    return this.afs.firestore.runTransaction(t =>
+      t.get(iDocRef).then(idDoc =>{
+        const newHero = idDoc.data().heroe + 1;
+        t.update(iDocRef, { heroe: newHero})
+        hero.id = newHero;
+        return heroDocRef.doc(hero.uid).set(hero);
+      }).then(function (newHero) {
+        console.log("Transaction successfully committed!")
+        return newHero;
+      })
+      .catch(error => console.log("Transaction failed: ", error))
+    );
+    
   }
   /** PUT: update the hero on the server */
   updateHero (hero: Hero): Observable<any> {
