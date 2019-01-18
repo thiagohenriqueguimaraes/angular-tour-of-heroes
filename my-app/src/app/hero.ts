@@ -1,5 +1,5 @@
 export class Hero {
-    guid: string;
+    uid?: string;
     id: number;
     name: string;
 }

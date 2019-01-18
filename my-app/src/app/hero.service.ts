@@ -49,29 +49,30 @@ export class HeroService {
   }
 
   identificadorHeroe(): Observable<Identificadores> {
-    return this.afs
-      .collection<Identificadores>('identificadores')
-      .doc('XfXPyHpo1Q1geT1dR8xo')
-      .valueChanges()
-      .pipe(
-        tap(_ => this.log(`fetched hero id=${_}`)),
-        catchError(this.handleError<any>('updateHero'))
-      );
+    return 
   }
 
   /** POST: add a new hero to the server */
   addHero(hero: Hero): Observable<Hero> {
-    let xpto = 0;
-    this.identificadorHeroe()
-    .subscribe(
-      id2 => xpto = id2.heroe,
-      error => this.handleError<any>(error)
-    );
-
-    this.log(`added hero w/ id=${xpto}`);
-    this.itemsCollection.doc(this.afs.createId()).set(hero);
-
+    hero.uid = this.afs.createId();
+    this.afs
+    .doc<Identificadores>('identificadores/'+'XfXPyHpo1Q1geT1dR8xo')
+    .valueChanges().pipe(
+      tap(_ => this.log(`fetched hero id=${_}`)),
+      catchError(this.handleError<any>('updateHero'))
+    ).subscribe(function (data) {
+      hero.id = data.heroe;
+      this.log(`added hero w/ id=${data.heroe}`);
+      this.itemsCollection.doc(hero.uid).set(hero);
+    });
     return this.getHero(hero.id);
+  }
+
+  addX(hero: Hero){
+    var heroIdRef = this.afs
+    .doc<Identificadores>('identificadores/'+'XfXPyHpo1Q1geT1dR8xo');
+    var heroRef = this.itemsCollection.doc('heroes');
+    return this.afs.
   }
   /** PUT: update the hero on the server */
   updateHero (hero: Hero): Observable<any> {
@@ -83,9 +84,9 @@ export class HeroService {
 
   /** DELETE: delete the hero from the server */
   deleteHero (hero: Hero | string): void {
-    const id = typeof hero === 'string' ? hero : hero.guid;
+    const uid = typeof hero === 'string' ? hero : hero.uid;
 
-    this.afs.collection('heroes').doc(id).delete();
+    this.afs.collection('heroes').doc(uid).delete();
   }
 
   /* GET heroes whose name contains search term */
