@@ -48,15 +48,11 @@ export class HeroService {
       );
   }
 
-  identificadorHeroe(): Observable<Identificadores> {
-    return 
-  }
-
   /** POST: add a new hero to the server */
   addHero(hero: Hero): Observable<Hero> {
     hero.uid = this.afs.createId();
     this.afs
-    .doc<Identificadores>('identificadores/'+'XfXPyHpo1Q1geT1dR8xo')
+    .doc<Identificadores>('identificadores/' + 'XfXPyHpo1Q1geT1dR8xo')
     .valueChanges().pipe(
       tap(_ => this.log(`fetched hero id=${_}`)),
       catchError(this.handleError<any>('updateHero'))
@@ -70,25 +66,24 @@ export class HeroService {
 
   addX(hero: Hero) {
     const iDocRef = this.afs.firestore
-    .collection("identificadores")
+    .collection('identificadores')
     .doc('XfXPyHpo1Q1geT1dR8xo');
     const heroDocRef = this.afs.firestore
     .collection('heroes');
-    
+
     hero.uid = this.afs.createId();
     return this.afs.firestore.runTransaction(t =>
-      t.get(iDocRef).then(idDoc =>{
+      t.get(iDocRef).then(idDoc => {
         const newHero = idDoc.data().heroe + 1;
         t.update(iDocRef, { heroe: newHero})
         hero.id = newHero;
         return heroDocRef.doc(hero.uid).set(hero);
       }).then(function (newHero) {
-        console.log("Transaction successfully committed!")
+        console.log('Transaction successfully committed!')
         return newHero;
       })
-      .catch(error => console.log("Transaction failed: ", error))
+      .catch(error => console.log('Transaction failed: ', error))
     );
-    
   }
   /** PUT: update the hero on the server */
   updateHero (hero: Hero): Observable<any> {
