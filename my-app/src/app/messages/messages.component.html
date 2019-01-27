@@ -1,8 +1,8 @@
-<div *ngIf="messageService.messages.length">
-
-    <h2>Mensagens de log</h2>
-    <button class="clear"
-            (click)="messageService.clear()">Limpar</button>
-    <div *ngFor='let message of messageService.messages'> {{message}} </div>
-  
-  </div>
+<div class="row" *ngIf="messageService.messages.length">
+<div class="col-md-12">
+<h2>Mensagens de log</h2>
+<button class="clear"
+        (click)="messageService.clear()">Limpar</button>
+<div *ngFor='let message of messageService.messages'> {{message}} </div>
+</div>
+</div>

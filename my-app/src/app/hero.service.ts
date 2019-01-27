@@ -49,25 +49,11 @@ export class HeroService {
   }
 
   /** POST: add a new hero to the server */
-  addHero(hero: Hero): Observable<Hero> {
-    hero.uid = this.afs.createId();
-    this.afs
-    .doc<Identificadores>('identificadores/' + 'XfXPyHpo1Q1geT1dR8xo')
-    .valueChanges().pipe(
-      tap(_ => this.log(`fetched hero id=${_}`)),
-      catchError(this.handleError<any>('updateHero'))
-    ).subscribe(function (data) {
-      hero.id = data.heroe;
-      this.log(`added hero w/ id=${data.heroe}`);
-      this.itemsCollection.doc(hero.uid).set(hero);
-    });
-    return this.getHero(hero.id);
-  }
-
-  addX(hero: Hero) {
+  addHero(hero: Hero) {
     const iDocRef = this.afs.firestore
     .collection('identificadores')
     .doc('XfXPyHpo1Q1geT1dR8xo');
+
     const heroDocRef = this.afs.firestore
     .collection('heroes');
 
