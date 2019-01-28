@@ -22,13 +22,13 @@ export class HeroService {
   private heroesUrl = 'api/heroes'; // Url to web api
   private itemsCollection: AngularFirestoreCollection<Hero>;
   items: Observable<Hero[]>;
-  private afs: AngularFirestore;
+  
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
-    private _afs: AngularFirestore) {
-      this.itemsCollection = _afs.collection<Hero>('heroes');
-      this.afs = _afs;
+    private afs: AngularFirestore) {
+      this.itemsCollection = afs.collection<Hero>('heroes');
+      this.afs = afs;
     }
   /** GET heroes from the server */
   getHeroes(): Observable<Hero[]> {

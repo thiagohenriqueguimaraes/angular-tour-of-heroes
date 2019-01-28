@@ -17,6 +17,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from './login/login.component';
+import { AuthService } from '../app/core/auth.service';
+import { AuthGuard } from '../app/core/auth.guard';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import { LoginComponent } from './login/login.component';
     DashboardComponent,
     HeroSearchComponent,
     LoginComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,9 +47,9 @@ import { LoginComponent } from './login/login.component';
     AngularFireModule.initializeApp(environment.firebase, 'x'),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
-    AngularFireStorageModule // imports firebase/storage only needed for storage features
+    AngularFireStorageModule, // imports firebase/storage only needed for storage features
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,21 +8,21 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  private afs: AngularFirestore;
-  constructor(_afs: AngularFirestore) {
-    this.afs = _afs;
+  user: User;
+  constructor() {
+
   }
 
   ngOnInit() {
   }
 
-  signin(user: User): void {
-    this.afs.firestore.a.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ...
-    });
+  entrar(user: User): void {
+    // this.afs.firestore.a.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    //   // Handle Errors here.
+    //   var errorCode = error.code;
+    //   var errorMessage = error.message;
+    //   // ...
+    // });
   }
 
 }
