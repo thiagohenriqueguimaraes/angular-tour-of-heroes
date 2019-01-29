@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Upload } from './upload';
 import { AngularFireDatabaseModule, AngularFireList } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
-@Injectable()
+// import { environment } from '../../../environments/environment';
+@Injectable({ providedIn: 'root' })
 export class UploadService {
 
   constructor(private db: AngularFireDatabaseModule) { }
@@ -11,6 +12,7 @@ export class UploadService {
   uploads: AngularFireList<Upload[]>;
 
   pushUpload(upload: Upload) {
+    // firebase.initializeApp(environment.firebase)
     const storageRef = firebase.storage().ref();
     const uploadTask = storageRef.child(`${this.basePath}/${upload.file.name}`).put(upload.file);
 
