@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { LoginComponent } from './login/login.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UploadFormComponent } from './uploads/upload-form/upload-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'detail/:id', component : HeroDetailComponent,  canActivate: [AuthGuard] },
   { path: 'heroes', component : HeroesComponent },
   { path: 'login', component : LoginComponent },
-  { path: 'login2', component : UserProfileComponent}
+  { path: 'login2', component : UserProfileComponent},
+  { path: 'upload', component : UploadFormComponent}
 ];
 
 @NgModule({

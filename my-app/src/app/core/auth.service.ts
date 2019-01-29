@@ -16,7 +16,6 @@ interface User {
   favoriteColor?: string;
 }
 
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 

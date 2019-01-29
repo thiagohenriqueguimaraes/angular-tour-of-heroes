@@ -8,7 +8,7 @@ import { Hero } from './hero';
 import { Identificadores } from './identificadores';
 import { MessageService } from './message.service';
 
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, } from '@angular/fire/firestore';
 
 /** The number of widgets present */
 declare var firebase: any;

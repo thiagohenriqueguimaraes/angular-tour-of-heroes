@@ -20,6 +20,8 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from '../app/core/auth.service';
 import { AuthGuard } from '../app/core/auth.guard';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UploadFormComponent } from './uploads/upload-form/upload-form.component';
+import { UploadService } from './uploads/shared/upload.service';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     HeroSearchComponent,
     LoginComponent,
     UserProfileComponent,
+    UploadFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, UploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
