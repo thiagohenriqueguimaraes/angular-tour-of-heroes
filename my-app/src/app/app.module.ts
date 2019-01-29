@@ -12,10 +12,11 @@ import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { environment } from '../environments/environment';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireModule } from 'angularfire2';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from '../app/core/auth.service';
 import { AuthGuard } from '../app/core/auth.guard';
@@ -33,7 +34,7 @@ import { UploadService } from './uploads/shared/upload.service';
     HeroSearchComponent,
     LoginComponent,
     UserProfileComponent,
-    UploadFormComponent,
+    UploadFormComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +51,9 @@ import { UploadService } from './uploads/shared/upload.service';
     AngularFireModule.initializeApp(environment.firebase, 'x'),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
-    AngularFireStorageModule, // imports firebase/storage only needed for storage features
+    AngularFireStorageModule, // imports firebase/storage only needed for storage features,
+    AngularFireDatabaseModule
+    
   ],
   providers: [AuthService, AuthGuard, UploadService],
   bootstrap: [AppComponent]

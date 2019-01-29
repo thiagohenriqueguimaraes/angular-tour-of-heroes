@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Upload } from './upload';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-declare var firebase: any;
-// import * as firebase from 'firebase/app';
+import { AngularFireDatabaseModule, AngularFireList } from 'angularfire2/database';
+import * as firebase from 'firebase/app';
 @Injectable()
 export class UploadService {
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFireDatabaseModule) { }
 
   private basePath = '/uploads';
-  uploads: AngularFirestoreCollection<Upload[]>;
+  uploads: AngularFireList<Upload[]>;
 
   pushUpload(upload: Upload) {
     const storageRef = firebase.storage().ref();
